@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -24,30 +25,50 @@
 
 
   <div id="build">
-  <div class="w3-container w3-blue">
-    <h2> Build A Poll </h2>
-  </div>
+    <div class="w3-container w3-blue">
+     <h2> Build A Poll </h2>
+    </div>
   
-  <form action='addPoll.php' class="w3-container">
-   <p>
-    <label><b>Poll Title</b></label>
-    <input class="w3-input" name="title" type="text" required></p>
+    <form id="addPoll" action="addPoll.php" method="post">
+    <p>
+    <label><b>Poll Title</b></label> 
+    <input class="w3-input" id="title" name="title" type="text" required></p>
     <p>
     <label><b>Option1</b></label>
-    <input class="w3-input" name="option1" type="text" required></p>
+    <input class="w3-input" id="option1" name="option1" type="text" required></p>
     <p>
     <label><b>Option2</b></label>
-    <input class="w3-input" name="option2" type="text" required></p>
+    <input class="w3-input" id="option2" name="option2" type="text" required></p>
     <p>
     <label><b>Option3</b></label>
-    <input class="w3-input" name="option3" type="text"</p>
+    <input class="w3-input" id="option3" name="option3" type="text"</p>
     <p>
     <label><b>Option4</b></label>
-    <input class="w3-input" name="option4" type="text"</p>
+    <input class="w3-input" id="option4" name="option4" type="text"</p>
     </p>
     <input type="submit" value="Submit">
-  </form>
+    </form>
   </div>
+
+
+<script type='text/javascript'>
+  /* Attach a submit handler to the form */
+  $("#addPoll").submit(function(event) {
+
+    /* Stop form from submitting normally */
+    event.preventDefault();
+
+    /* get the action attribute from the form action="" element*/
+    var $form = $( this ),
+      url = $form.attr( 'action' );
+
+    /* Send the data using post with form fields */
+    var posting = $.post( url, {title: $('#title').val(), option1: $('#option1').val(), option2: $('#option2').val(), option3: $('#option3').val(), option4: $('#option4).val() } );
+    posting.done(function( data ) {
+      alert('success');
+    });
+  });
+</script>
 </body>
 
 </html>
