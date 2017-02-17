@@ -1,24 +1,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-body
+p
 {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background-color: black;
+  position: relative;
 }
-
+input
+{
+  width: 60%;
+}
 #build
-{  
-  margin-top: 50px; 
-  width: 20%;
-  border-style: solid;
-}
-#build h2
 {
-  color: black;
+  margin-left: 15px;
+  width: 100%;
 }
-
+.results
+{
+ 
+  margin-left: 0px;
+  margin-right: 50px;
+}
+.inputButton
+{
+  margin-left: 0px;
+  width: 20px;
+}
 h2
 {
   color: #0066cc;
