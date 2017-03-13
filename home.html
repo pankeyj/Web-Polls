@@ -7,21 +7,24 @@
   <link rel="stylesheet" href="skeleton.css">
   <link rel="stylesheet" href="normalize.css">  
   <link rel="stylesheet" href="style.css">
-
+  <title> Jake's Web Polls </title>
+  <meta name="description" content="A simple polling service created by Jacob Pankey to expand upon web development skills complete an honors senior project">
+  <meta name="keywords" content="Grand Valley, Polls, Poll, Jacob Pankey, Jake's
+eb Polls, Simple Polls, Jake's Web Polls, Simple, cis, gvsu, edu, computer science">
 <script>
 
 $ (document).ready(function(){
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
-      document.getElementById("results").innerHTML = xhttp.responseText;
+      document.getElementById("results").innerHTML = xhttp.responseText + "<button> REFRESH </button>";
     }
   };
   xhttp.open("GET", "loadPolls.php", true);
   xhttp.send();
 });
 
-$(document).ready(function(){
+$ (document).ready(function(){
   $("#addPoll").submit(function(event) {
     event.preventDefault();
     var $form = $( this ),
@@ -67,6 +70,7 @@ $(document).ready(function(){
     <li><a href="search.html">SEARCH</a></li>
     <li><a href="profile.html">PROFILE</a></li>
     <li><a href="help.html">HELP</a></li>
+    <li><a href="login.html">LOGIN</a></li>
   </ul>
 
     <div class="row">
@@ -98,10 +102,9 @@ $(document).ready(function(){
     <div id="results" class="five columns">
      <p> This is where I will display the poll results </p>
 
-      <button> REFRESH </button>
     </div>
     </div>
-  <p> Hello </p>
+    <p> Hello </p>
 </body>
 
 </html>
