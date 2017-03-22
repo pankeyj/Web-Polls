@@ -19,11 +19,20 @@ echo "
   <label>" . $row["pollName"] . "</label>
   <form class='results'>
   <input class='inputButton' type='radio'>" . $row["option1"] . "<br>
-  <input class='inputButton' type='radio'>" . $row["option2"] . "<br>
-  <input class='inputButton' type='radio'>" . $row["option3"] . "<br>
-  <input class='inputButton' type='radio'>" . $row["option4"] . "<br>
-  </form>"; 
+  <input class='inputButton' type='radio'>" . $row["option2"] . "<br>";
+  
+  if (!is_null($row["option3"]))
+  {
+  echo "<input class='inputButton' type='radio'>" . $row["option3"] . "<br>";
+  }
+  if( !is_null($row["option4"]))
+  {
+  echo "<input class='inputButton' type='radio'>" . $row["option4"] . "<br>";
+  }
 
+  echo "
+  <input type='submit' value='Submit'>
+  </form> <br>";
   }
 $conn->close();
 
