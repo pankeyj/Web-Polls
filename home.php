@@ -31,25 +31,36 @@ $ (document).ready(function(){
   xhttp.send();
 });
 
-
-$ (document).ready(function(){
-  $("submitPoll").submit(function(event) {
-  event.preventDefault();
-  var $form = $( this );
-  url = $form.attr( 'action' );
+function vote(){
+  alert("Hello");
+  var url = 'submitPoll.php';
   var user = "Anonymous";
   if(!(localStorage.user === undefined)){
     user = localStorage.user;
   }
+  var vote;
+  for(var i=0; i < this.elements.length; i++){
+    var e = this.elements[i];
+    if(e.checked){
+      $(this).attr('val') = e.value;
+    }
+  }
   document.getElementById("user").value = user;
-  var posting = $.post( url,
+  var data = 
   {
-    title: $( this ).attr('id')
-    
-  });
+    user: $('#user').val(),
+    pollId: $( this ).attr('id'),
+    vote: $(this).attr('val')
+  };
+  var posting = $.post(url,data);
 
-  });
-});
+
+  posting.done(function( data ) {
+      alert('success');
+    });
+  alert(data);
+  event.preventDefault();
+}
 
 
 $ (document).ready(function(){
