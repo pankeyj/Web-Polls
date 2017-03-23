@@ -1,12 +1,13 @@
 <?php
+$reponse = array();
 $conn = new mysqli('cis.gvsu.edu', 'pankeyj', 'pankeyj8613', 'pankeyj');
 if($conn->connect_errno)
 {
-        echo "Connection Error\n";
+        $response['message'] = "Connection error";
 }
 else
 {
-        echo "Connected succesfully\n";
+        $response['message'] = "Connection successful";
 }
 
 $username = $_POST["username"];
@@ -16,18 +17,17 @@ $sql = "SELECT * FROM Users WHERE username ='"  . $username . "' AND password='"
 
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
-echo $row["username"];
-
-echo "\n ". $sql . "\n";
 
 if(!is_null($row["username"]))
 {
-	echo "Valid credentials";
+	$response['success'] = true;
+	$response['name'] = $username;
 }
 else
 {
-	echo "Failed to login";
+	$response['success'] = false;
+	$response['name'] = null;
 }
 $conn->close();
 
-?>
+exit(json_encode($response));

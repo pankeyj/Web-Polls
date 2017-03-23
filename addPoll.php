@@ -6,7 +6,7 @@ if($conn->connect_errno)
 }
 else
 {
-	echo "Connected succesfully";
+	echo "Connected sy";
 }
 
 $title = $_POST["title"];
@@ -14,28 +14,31 @@ $option1 = $_POST["option1"];
 $option2 = $_POST["option2"];
 $option3 = $_POST["option3"];
 $option4 = $_POST["option4"];
+$username = $_POST["user"];
+
+echo "<br>";
 
 if (!empty($option3) && !empty($option4))
 {
 	$sql = "INSERT INTO Polls
-	(pollName, option1, option2, option3, option4)
+	(pollName, option1, option2, option3, option4, username)
 	VALUES
-	('$title', '$option1','$option2','$option3','$option4')";
+	('$title', '$option1','$option2','$option3','$option4', '$username')";
 }
 
 elseif (!empty($option3) && empty($option4))
 {
         $sql = "INSERT INTO Polls
-        (pollName, option1, option2, option3)
+        (pollName, option1, option2, option3, username)
         VALUES
-        ('$title', '$option1','$option2','$option3')";
+        ('$title', '$option1','$option2','$option3', '$username')";
 }
 elseif (empty($option3) && empty($option4))
 {
         $sql = "INSERT INTO Polls
-        (pollName, option1, option2)
+        (pollName, option1, option2, username)
         VALUES
-        ('$title','$option1','$option2')";
+        ('$title','$option1','$option2', '$username')";
 }
 else
 {

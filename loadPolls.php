@@ -17,7 +17,7 @@ echo "Hello";
 while($row = $result->fetch_assoc()) {
 echo "
   <label>" . $row["pollName"] . "</label>
-  <form class='results'>
+  <form class='submitPoll' action='submitPoll.php' method='POST'>
   <input class='inputButton' type='radio'>" . $row["option1"] . "<br>
   <input class='inputButton' type='radio'>" . $row["option2"] . "<br>";
   
@@ -31,8 +31,10 @@ echo "
   }
 
   echo "
-  <input type='submit' value='Submit'>
-  </form> <br>";
+  <input type='submit' id=" . $row["id"] . " value='Submit'>
+  <input type='hidden' name=user>
+  </form>
+  <p>Submitted By: " .$row["username"] . "</p><br>";
   }
 $conn->close();
 

@@ -14,6 +14,13 @@ eb Polls, Simple Polls, Jake's Web Polls, Simple, cis, gvsu, edu, computer scien
 <script>
 
 $ (document).ready(function(){
+  if(!(localStorage.user === undefined)){
+    document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+  }else{
+    document.getElementById("userID").innerHTML = "You are not signed in"
+  }
+
+
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
@@ -71,6 +78,7 @@ $ (document).ready(function(){
     <li><a href="profile.php">PROFILE</a></li>
     <li><a href="help.php">HELP</a></li>
     <li><a href="login.php">LOGIN</a></li>
+    <li><a id="userID"href="profile.php"></a></li>
   </ul>
 
     <div class="row">

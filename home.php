@@ -14,6 +14,13 @@ eb Polls, Simple Polls, Jake's Web Polls, Simple, cis, gvsu, edu, computer scien
 <script>
 
 $ (document).ready(function(){
+  if(!(localStorage.user === undefined)){
+    document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+  }else{
+    document.getElementById("userID").innerHTML = "You are not signed in"
+  }
+
+
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
@@ -24,11 +31,40 @@ $ (document).ready(function(){
   xhttp.send();
 });
 
+
+$ (document).ready(function(){
+  $("submitPoll").submit(function(event) {
+  event.preventDefault();
+  var $form = $( this );
+  url = $form.attr( 'action' );
+  var user = "Anonymous";
+  if(!(localStorage.user === undefined)){
+    user = localStorage.user;
+  }
+  document.getElementById("user").value = user;
+  var posting = $.post( url,
+  {
+    title: $( this ).attr('id')
+    
+  });
+
+  });
+});
+
+
 $ (document).ready(function(){
   $("#addPoll").submit(function(event) {
     event.preventDefault();
     var $form = $( this ),
     url = $form.attr( 'action' );
+    var user = "Anonymous";
+    if(!(localStorage.user === undefined)){
+      user = localStorage.user;
+    }
+    document.getElementById("user").value = user;
+
+
+
 
     /* Send the data using post with form fields */
     var posting = $.post( url,
@@ -37,7 +73,8 @@ $ (document).ready(function(){
       option1: $('#option1').val(),
       option2: $('#option2').val(), 
       option3: $('#option3').val(), 
-      option4: $('#option4').val() 
+      option4: $('#option4').val(),
+      user: $('#user').val()
     } );
 
     posting.done(function( data ) {
@@ -71,6 +108,7 @@ $ (document).ready(function(){
     <li><a href="profile.php">PROFILE</a></li>
     <li><a href="help.php">HELP</a></li>
     <li><a href="login.php">LOGIN</a></li>
+    <li><a id="userID"href="profile.php"></a></li>
   </ul>
 
     <div class="row">
@@ -96,6 +134,7 @@ $ (document).ready(function(){
       <input id="option4" name="option4" type="text"</p>
       </p>
       <button class="button-primary" id="submitPoll"> SUBMIT </button>
+      <input id="user" name="user" type="hidden" value="">
       </form>
     </div>
     </div>

@@ -20,6 +20,12 @@ if ($conn->query($sql) == TRUE)
         echo "Table Dropped";
 }
 
+$sql = "DROP TABLE Votes";
+if ($conn->query($sql) == TRUE)
+{
+	echo "Table Dropped";
+}
+
 
 
 $sql = "CREATE TABLE Polls (
@@ -28,7 +34,8 @@ pollName VARCHAR(100),
 option1 VARCHAR(50),
 option2 VARCHAR(50),
 option3 VARCHAR(50),
-option4 VARCHAR(50)
+option4 VARCHAR(50),
+username VARCHAR(50)
 )";
 
 if ($conn->query($sql) == TRUE)
@@ -54,4 +61,19 @@ else
         echo "Error creating table";
 }
 
+$sql = "CREATE TABLE Votes (
+pollId INT,
+username VARCHAR(50),
+choice INT,
+PRIMARY KEY(pollId, username)
+)";
+
+if($conn->query($sql) == TRUE)
+{
+	echo "TABLE CREATED";
+}
+else
+{
+	echo "ERROR CREATING TABLE";
+}
 ?>

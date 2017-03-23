@@ -16,7 +16,7 @@ $password = $_POST["password"];
 $sql = "INSERT INTO Users
 	(username, password)
 	VALUES
-	('$username', '$password')";
+	('" . $username . "','" . $password . "')";
 
 echo "Code " . $sql;
 if($conn->query($sql) == TRUE)

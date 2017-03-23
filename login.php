@@ -23,6 +23,13 @@ $ (document).ready(function(){
     event.preventDefault();
     var $form = $( this ),
     url = $form.attr( 'action' );
+    var user = "Anonymous";
+    if(!(localStorage.user === undefined)){
+      user = localStorage.user;
+    }
+    document.getElementById("user").value = user;
+
+
 
     /* Send the data using post with form fields */
     var posting = $.post( url,
@@ -31,7 +38,8 @@ $ (document).ready(function(){
       option1: $('#option1').val(),
       option2: $('#option2').val(), 
       option3: $('#option3').val(), 
-      option4: $('#option4').val() 
+      option4: $('#option4').val(),
+      user: $('#user').val()
     } );
 
     posting.done(function( data ) {
@@ -57,7 +65,16 @@ $ (document).ready(function(){
     } );
 
     posting.done(function( data ) {
-      alert('success' + data);
+      var response = JSON.parse(data);
+      if(response['success'])
+      {
+        alert("successful login");
+        localStorage.setItem("user", $('#username').val());
+ 	document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+      }else{
+        alert("invalid credentials");
+      }
+
     });
 
     posting.fail(function() {
@@ -68,7 +85,17 @@ $ (document).ready(function(){
 });
 
 
+$ (document).ready(function(){
+  $("#logout").click(function(event) {
+    localStorage.clear();
+    if(!(localStorage.user === undefined)){
+      document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+    }else{
+      document.getElementById("userID").innerHTML = "Whoops"
+    }
 
+  });
+});
 // Create a new user in the database
 $ (document).ready(function(){
   $("#createUser").submit(function(event) {
@@ -79,8 +106,8 @@ $ (document).ready(function(){
     /* Send the data using post with form fields */
     var posting = $.post( url,
     {
-      username: $('#username').val(), 
-      option1: $('#password').val(),
+      username: $('#newusername').val(), 
+      password: $('#newpassword').val(),
     } );
 
     posting.done(function( data ) {
@@ -88,6 +115,15 @@ $ (document).ready(function(){
     });
   event.preventDefault();
   });
+});
+
+
+$ (document).ready(function(){
+    if(!(localStorage.user === undefined)){
+      document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+    }else{
+      document.getElementById("userID").innerHTML = "Whoops"
+    }
 });
 
 </script>
@@ -115,6 +151,7 @@ $ (document).ready(function(){
     <li><a href="profile.php">PROFILE</a></li>
     <li><a href="help.php">HELP</a></li>
     <li><a href="login.php">LOGIN</a></li>
+    <li><a id="userID"href="profile.php">You are not signed in</a></li>
   </ul>
 
     <div class="row">
@@ -166,11 +203,12 @@ $ (document).ready(function(){
      <form id="createUser" action="addUser.php" method="POST">
      <p>
      <label><b>Username</b></label>
-     <input id="username" type="text" name="username" required></p>
+     <input id="newusername" type="text" name="username" required></p>
      <label><b>Password</b></label>
-     <input id="password" type="text" name="password" required></p>
+     <input id="newpassword" type="text" name="password" required></p>
      <input class="button-primary" type="submit" value="Create User">
      </form>
+     <button id="logout"> LOGOUT </button>
     </div>
    </div>
  </body>
