@@ -177,6 +177,7 @@ $ (document).ready(function(){
       <input id="option4" name="option4" type="text"</p>
       </p>
       <button class="button-primary" id="submitPoll"> SUBMIT </button>
+      <input id="user" name="user" type="hidden" value="">
       </form>
     </div>
     </div>

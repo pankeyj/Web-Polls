@@ -7,6 +7,21 @@ input
 {
   width: 60%;
 }
+#resultsHdr
+{
+  font-size:64px;
+
+  font-color: Gray;
+
+ 
+}
+
+#help
+{
+ text-align: Center;
+ 
+}
+
 #build
 {
   margin-left: 15px;

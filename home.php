@@ -31,35 +31,40 @@ $ (document).ready(function(){
   xhttp.send();
 });
 
-function vote(){
-  alert("Hello");
+function vote(formId){
   var url = 'submitPoll.php';
   var user = "Anonymous";
+  var vote = -1;
   if(!(localStorage.user === undefined)){
     user = localStorage.user;
   }
-  var vote;
-  for(var i=0; i < this.elements.length; i++){
-    var e = this.elements[i];
-    if(e.checked){
-      $(this).attr('val') = e.value;
+  var form = document.getElementById(formId).elements;
+  for(var i = 0; i < form.length; i++)
+  {
+    if(form[i].checked)
+    {
+      vote = form[i].value;
     }
   }
-  document.getElementById("user").value = user;
-  var data = 
-  {
-    user: $('#user').val(),
-    pollId: $( this ).attr('id'),
-    vote: $(this).attr('val')
-  };
-  var posting = $.post(url,data);
+  
 
+  var http = new XMLHttpRequest();
+  var url = "submitPoll.php";
+  var params = "pollId=" + formId + "&name=" + user + "&choice=" + vote;
+  http.open("POST", url, true);
+  
+  //Send the proper header information along with the request
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//  http.setRequestHeader("Content-length", params.length);
+//  http.setRequestHeader("Connection", "close");
 
-  posting.done(function( data ) {
-      alert('success');
-    });
-  alert(data);
-  event.preventDefault();
+  http.onreadystatechange = function() {//Call a function when the state changes.
+	if(http.readyState == 4 && http.status == 200) {
+		alert("respons: " + http.responseText);
+	}
+  }
+  http.send(params);
+  
 }
 
 
@@ -149,12 +154,10 @@ $ (document).ready(function(){
       </form>
     </div>
     </div>
-    <div id="results" class="five columns">
-     <p> This is where I will display the poll results </p>
-
+    <h1 id="resultsHdr"> Current Polls </h1>
+    <div id="results" class="six columns">
     </div>
     </div>
-    <p> Hello </p>
 </body>
 
 </html>

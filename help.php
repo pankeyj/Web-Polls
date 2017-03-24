@@ -24,28 +24,6 @@ $ (document).ready(function(){
   xhttp.send();
 });
 
-$ (document).ready(function(){
-  $("#addPoll").submit(function(event) {
-    event.preventDefault();
-    var $form = $( this ),
-    url = $form.attr( 'action' );
-
-    /* Send the data using post with form fields */
-    var posting = $.post( url,
-    {
-      title: $('#title').val(), 
-      option1: $('#option1').val(),
-      option2: $('#option2').val(), 
-      option3: $('#option3').val(), 
-      option4: $('#option4').val() 
-    } );
-
-    posting.done(function( data ) {
-      alert('success');
-    });
-  event.preventDefault();
-  });
-});
 </script>
 
 
@@ -74,29 +52,9 @@ $ (document).ready(function(){
   </ul>
 
     <div class="row">
-    <div class="five columns">
-    <div id="build">
-       <h2> Build A Poll </h2>
-  
-      <form id="addPoll" action="addPoll.php" method="POST">
-      <p>
-      <label><b>Poll Title</b></label> 
-      <input id="title" name="title" type="text" required></p>
-      <p>
-      <label><b>Option1</b></label>
-      <input id="option1" name="option1" type="text" required></p>
-      <p>
-      <label><b>Option2</b></label>
-      <input  id="option2" name="option2" type="text" required></p>
-      <p>
-      <label><b>Option3</b></label>
-      <input id="option3" name="option3" type="text"</p>
-      <p>
-      <label><b>Option4</b></label>
-      <input id="option4" name="option4" type="text"</p>
-      </p>
-      <button class="button-primary" id="submitPoll"> SUBMIT </button>
-      </form>
+    <div id="help" class="ten columns">
+      <h1 id="hdr" ><b> Welcome </b> </h1>
+      <p> The purpose of this we page is to allow provide an easy way for students to survey others. This can be used as a form of social media or it can serve as a tool for class.<p>
     </div>
     </div>
   
