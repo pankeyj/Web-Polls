@@ -122,7 +122,7 @@ $ (document).ready(function(){
     if(!(localStorage.user === undefined)){
       document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
     }else{
-      document.getElementById("userID").innerHTML = "Whoops"
+      document.getElementById("userID").innerHTML = "Anonymous"
     }
 });
 

@@ -31,11 +31,11 @@ if ($conn->query($sql) == TRUE)
 $sql = "CREATE TABLE Polls (
 id INT PRIMARY KEY AUTO_INCREMENT,
 pollName VARCHAR(100),
-option1 VARCHAR(50),
-option2 VARCHAR(50),
-option3 VARCHAR(50),
-option4 VARCHAR(50),
-username VARCHAR(50)
+option1 VARCHAR(200),
+option2 VARCHAR(200),
+option3 VARCHAR(200),
+option4 VARCHAR(200),
+username VARCHAR(200)
 )";
 
 if ($conn->query($sql) == TRUE)
