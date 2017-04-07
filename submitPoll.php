@@ -17,60 +17,81 @@ $sql = "INSERT INTO Votes
 
 if($conn->query($sql) == TRUE)
 {
-	echo "Vote submitted\n";
+	
 }
 else
 {
-	echo "Your vote could not be recorded\n";
-	echo "<br>";
-	echo $sql;
+	
 }
 
-$response = array();
 
-$sql = "SELECT COUNT(*)
+
+$sql = "SELECT COUNT(*) AS 'count'
 	FROM Votes
 	WHERE pollId = " . $pollId . " AND choice = 1";
-$result = $conn->_query($sql);
-$row = $result->fetch_assoc();
-$count1 = $row['count'];
 
+
+
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
+if(is_null($row['count']))
+{
+	$count1 = 0;
+}
+else
+{
+	$count1 = $row['count'];
+}
 
 $sql = "SELECT COUNT(*)
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 2";
-$result = $conn->_query($sql);
+$result = $conn->query($sql);
 $row = $result->fetch_assoc();
-$count2 = $row['count'];
-
+if(is_null($row['count']))
+{
+	$count2 = 0;
+}
+else
+{
+	$count2 = $row['count'];
+}
 
 
 $sql = "SELECT COUNT(*)
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 3";
-$result = $conn->_query($sql);
+$result = $conn->query($sql);
 $row = $result->fetch_assoc();
-$count3 = $row['count'];
-
+if(is_null($row['count']))
+{
+	$count3 = 0;
+}
+else
+{
+	$count3 = $row['count'];
+}
 
 
 $sql = "SELECT COUNT(*)
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 4";
-$result = $conn->_query($sql);
+$result = $conn->query($sql);
 $row = $result->fetch_assoc();
-$count4 = $row['count'];
+if(is_null($row['count']))
+{
+	$count4 = 0;
+}
+else
+{
+	$count4 = $row['count'];
+}
+$response = Array();
+$response[1] = $count1;
+$response[2] = $count2;
+$response[3] = $count3;
+$response[4] = $count4;
 
-
-$response['choice1'] = $count1;
-$response['choice2'] = $count2;
-$response['choice3'] = $count3;
-$response['choice4'] = $count4;
-
-
-echo "\n\n"
-echo $count1;
-echo "HELLO WORLD";
-echo $response;
+echo json_encode($response);
 
 ?>

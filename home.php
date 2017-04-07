@@ -58,13 +58,24 @@ function vote(formId){
 //  http.setRequestHeader("Content-length", params.length);
 //  http.setRequestHeader("Connection", "close");
 
+
+  var votes = JSON.parse(http.responseText);
+  var total = 0;
+  var response = "";
+
+
+
   http.onreadystatechange = function() {//Call a function when the state changes.
 	if(http.readyState == 4 && http.status == 200) {
-		alert("response: " + http.responseText);
+		for(var i=1; i<5;i++){ 	
+			response += "\nVotes for choice " + i + " = " + votes[i];
+			total += votes[i];
+		}
+		alert(response);
 	}
   }
   http.send(params);
-  
+  alert("Thank you for voting");
 }
 
 
