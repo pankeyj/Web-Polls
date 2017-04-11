@@ -90,10 +90,11 @@ $ (document).ready(function(){
     localStorage.clear();
     if(!(localStorage.user === undefined)){
       document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+      alert("Unable to log out");
     }else{
-      document.getElementById("userID").innerHTML = "Whoops"
+      document.getElementById("userID").innerHTML = "Anonymous";
+      alert("Successful Logout");
     }
-
   });
 });
 // Create a new user in the database
@@ -111,7 +112,7 @@ $ (document).ready(function(){
     } );
 
     posting.done(function( data ) {
-      alert('success');
+      alert('New User Created');
     });
   event.preventDefault();
   });

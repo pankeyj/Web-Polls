@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 
 <head>
+  <meta charset="utf-8"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
   <link rel="stylesheet" href="skeleton.css">
@@ -24,14 +26,28 @@ $ (document).ready(function(){
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
-      document.getElementById("results").innerHTML = xhttp.responseText + "<button> REFRESH </button>";
+      document.getElementById("results").innerHTML = xhttp.responseText + "<button id='refresh' onclick='refresh()'> REFRESH </button>";
     }
   };
   xhttp.open("GET", "loadPolls.php", true);
   xhttp.send();
 });
 
-function vote(formId){
+function refresh(){
+  alert("Button Clicked");
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status ==200) {
+      document.getElementById("results").innerHTML = xhttp.responseText + "<button id='refresh' onclick='refresh()'> REFRESH </button>";
+    }
+  };
+  xhttp.open("GET", "loadPolls.php", true);
+  xhttp.send();
+
+}
+
+function vote(event, formId){
+  event.preventDefault();
   var url = 'submitPoll.php';
   var user = "Anonymous";
   var vote = -1;
@@ -47,7 +63,7 @@ function vote(formId){
     }
   }
   
-
+  var element = document.getElementById("poll" + formId);
   var http = new XMLHttpRequest();
   var url = "submitPoll.php";
   var params = "pollId=" + formId + "&name=" + user + "&choice=" + vote;
@@ -59,19 +75,12 @@ function vote(formId){
 //  http.setRequestHeader("Connection", "close");
 
 
-  var votes = JSON.parse(http.responseText);
-  var total = 0;
-  var response = "";
-
+  var response = http.responseText;
 
 
   http.onreadystatechange = function() {//Call a function when the state changes.
 	if(http.readyState == 4 && http.status == 200) {
-		for(var i=1; i<5;i++){ 	
-			response += "\nVotes for choice " + i + " = " + votes[i];
-			total += votes[i];
-		}
-		alert(response);
+		element.innerHTML=this.responseText;
 	}
   }
   http.send(params);

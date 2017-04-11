@@ -18,10 +18,14 @@ input
 
 #help
 {
- text-align: Center;
+ text-align: Justify;
  
 }
 
+.help
+{
+  font-size: 20px;
+}
 #build
 {
   margin-left: 15px;
