@@ -29,9 +29,6 @@ else
 $sql = "SELECT COUNT(*) AS 'count'
 	FROM Votes
 	WHERE pollId = " . $pollId . " AND choice = 1";
-
-
-
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 if(is_null($row['count']))
@@ -42,7 +39,6 @@ else
 {
 	$count1 = $row['count'];
 }
-
 $sql = "SELECT COUNT(*) AS 'count'
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 2";
@@ -56,8 +52,6 @@ else
 {
 	$count2 = $row['count'];
 }
-
-
 $sql = "SELECT COUNT(*) AS 'count'
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 3";
@@ -71,8 +65,6 @@ else
 {
 	$count3 = $row['count'];
 }
-
-
 $sql = "SELECT COUNT(*) AS 'count'
         FROM Votes
         WHERE pollId = " . $pollId . " AND choice = 4";

@@ -8,11 +8,11 @@ else
 {
 	echo "Connected sy";
 }
-$title = $_POST["title"];
-$option1 = $_POST["option1"];
-$option2 = $_POST["option2"];
-$option3 = $_POST["option3"];
-$option4 = $_POST["option4"];
+$title = $conn->real_escape_string($_POST["title"]);
+$option1 = $conn->real_escape_string($_POST["option1"]);
+$option2 = $conn->real_escape_string($_POST["option2"]);
+$option3 = $conn->real_escape_string($_POST["option3"]);
+$option4 = $conn->real_escape_string($_POST["option4"]);
 $username = $_POST["user"];
 echo "<br>";
 if (!empty($option3) && !empty($option4))

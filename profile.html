@@ -14,22 +14,67 @@ eb Polls, Simple Polls, Jake's Web Polls, Simple, cis, gvsu, edu, computer scien
 <script>
 
 $ (document).ready(function(){
+  var str;
   if(!(localStorage.user === undefined)){
     document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+    str = localStorage.user;
   }else{
-    document.getElementById("userID").innerHTML = "You are not signed in"
+    document.getElementById("userID").innerHTML = "You are not signed in";
+    str = localStorage.user;
   }
-
-
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
       document.getElementById("results").innerHTML = xhttp.responseText + "<button> REFRESH </button>";
     }
   };
-  xhttp.open("GET", "loadPolls.php", true);
+  xhttp.open("GET", "loadProfile.php?usr=" + str, true);
   xhttp.send();
 });
+
+
+
+function vote(event, formId){
+  event.preventDefault();
+  var url = 'submitPoll.php';
+  var user = "Anonymous";
+  var vote = -1;
+  if(!(localStorage.user === undefined)){
+    user = localStorage.user;
+  }
+  var form = document.getElementById(formId).elements;
+  for(var i = 0; i < form.length; i++)
+  {
+    if(form[i].checked)
+    {
+      vote = form[i].value;
+    }
+  }
+
+  var element = document.getElementById("poll" + formId);
+  var http = new XMLHttpRequest();
+  var url = "submitPoll.php";
+  var params = "pollId=" + formId + "&name=" + user + "&choice=" + vote;
+  http.open("POST", url, true);
+
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  var response = http.responseText;
+
+
+  http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+                element.innerHTML=this.responseText;
+        }
+  }
+  http.send(params);
+  alert("Thank you for voting");
+}
+
+
+
+
+
+
 
 $ (document).ready(function(){
   $("#addPoll").submit(function(event) {
@@ -107,7 +152,9 @@ $ (document).ready(function(){
       </form>
     </div>
     </div>
-  
+    <h1 id="resultsHdr">Your Polls</h1>
+    <div id="results" class="six columns">
+    </div> 
 </body>
 
 </html>
