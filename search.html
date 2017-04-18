@@ -37,22 +37,80 @@ $ (document).ready(function(){
 });
 
 
+function vote(event, formId){
+  event.preventDefault();
+  var url = 'submitPoll.php';
+  var user = "Anonymous";
+  var vote = -1;
+  if(!(localStorage.user === undefined)){
+    user = localStorage.user;
+  }
+  var form = document.getElementById(formId).elements;
+  for(var i = 0; i < form.length; i++)
+  {
+    if(form[i].checked)
+    {
+      vote = form[i].value;
+    }
+  }
+  
+  var element = document.getElementById("poll" + formId);
+  var http = new XMLHttpRequest();
+  var url = "submitPoll.php";
+  var params = "pollId=" + formId + "&name=" + user + "&choice=" + vote;
+
+  http.open("POST", url, true);
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  var response = http.responseText;
+
+  http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+                element.innerHTML=this.responseText;
+        }
+  }
+  http.send(params);
+  alert("Thank you for voting");
+}
+
+
+
+
 $ (document).ready(function(){
   $ ("#searchPolls").submit(function(event) {
   event.preventDefault();
   if(!(localStorage.user === undefined)){
     document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
   }else{
-    document.getElementById("userID").innerHTML = "You are not signed in"
+    document.getElementById("userID").innerHTML = "You are not signed in";
   }
-  var str = "loadPolls.php?=
+  var title = document.getElementById("searchTitle").value;
+  var user = document.getElementById("searchUser").value;
+  var str;
+  if(title != "" && user != "")
+  {
+    str = "searchPolls.php?title=" + title + "&user=" + user;
+  }
+  else if(title != "")
+  {
+    str = "searchPolls.php?title=" + title;
+  }
+  else if(user != "")
+  {
+    str = "searchPolls.php?user=" + user;
+  }
+  else
+  {
+    alert("Please Enter Search Parameters");
+    return;
+  }
+  alert("String Value: " + str);
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status ==200) {
       document.getElementById("results").innerHTML = xhttp.responseText;
     }
   };
-  xhttp.open("GET", "loadPolls.php", true);
+  xhttp.open("GET", str, true);
   xhttp.send();
 });
 });
@@ -113,14 +171,14 @@ $ (document).ready(function(){
     </div>
     <div class="six columns">
       <h3> Search Polls </h3>
-      <form id="search" action="searchPolls.php" method="POST">
+      <form id="searchPolls" action="searchPolls.php" method="GET">
       <p>
       <label><b>Search By Title</b></label>
       <input id="searchTitle" type="text"></p>
       <p>
       <label><b>Search By User</b></label>
       <input id="searchUser" type="text"></p>
-      <button class="button-primary" id="submitPoll"> SUBMIT </button>
+      <button class="button-primary" id="submitSearch"> SUBMIT </button>
       </form>
       
 

@@ -4,9 +4,13 @@ if($conn->connect_errno)
 {
         echo "Connection Error>";
 }
+
+
+
 $usr = $_REQUEST["usr"];
 $sql = "SELECT * FROM Polls WHERE username = '" . $usr . "'";
 $result = $conn->query($sql);
+
 while($row = $result->fetch_assoc()) {
 $sql2 = "SELECT COUNT(*) AS 'count'
         FROM Votes
@@ -60,6 +64,7 @@ else
 {
         $count4 = $row2['count'];
 }
+
 echo "
   <h4> Voting Results </h4>
   <div id='poll" . $row["id"] . "'>
@@ -155,6 +160,7 @@ echo"
 </table>
 <br><br>";
     
-  }
+}
+
 $conn->close();
 ?>
