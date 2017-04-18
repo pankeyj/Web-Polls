@@ -7,10 +7,7 @@ if($conn->connect_errno)
 $usr = $_REQUEST["usr"];
 $sql = "SELECT * FROM Polls WHERE username = '" . $usr . "'";
 $result = $conn->query($sql);
-
 while($row = $result->fetch_assoc()) {
-
-
 $sql2 = "SELECT COUNT(*) AS 'count'
         FROM Votes
         WHERE pollId = " . $row["id"] . " AND choice = 1";
@@ -63,50 +60,39 @@ else
 {
         $count4 = $row2['count'];
 }
-
-
-
-
-
-
-
-
-
-
 echo "
   <h4> Voting Results </h4>
   <div id='poll" . $row["id"] . "'>
   <label>" . $row["pollName"] . "</label>
   <table>
   <tr>
-  <td>'" . $row["option1"] . "'</td>
+  <td class='resultsTable'>" . $row["option1"] . "</td>
   <td><b>VOTES=" . $count1 . "</b></td>
   </tr>
-  <td>'" . $row["option2"] . "'</td>
+  <td class='resultsTable'>" . $row["option2"] . "</td>
   <td><b>VOTES=" . $count2 . "</b></td>
   </tr>";
- 
+  
+  $bool3 = 0;
   if (!is_null($row["option3"]))
   {
-    echo " <td>'" . $row["option1"] . "'</td>
+    $bool3 = 1;
+    echo " <td class='resultsTable'>" . $row["option1"] . "</td>
   <td><b>VOTES=" . $count3 . "</b></td>
   </tr>";
-
   }
+  $bool4 = 0;
   if( !is_null($row["option4"]))
   {
+    $bool4 = 1;
   echo "
-  <td>'" . $row["option4"] . "'</td>
+  <td class='resultsTable'>" . $row["option4"] . "</td>
   <td><b>VOTES=" . $count4 . "</b></td>
   </tr>";
   }
-
   echo "
   </table>
   </div>";
-
-
-
 $total = $count1 + $count2 + $count3 + $count4;
 $p1 = 400 * round($count1/$total,2);
 $p2 = 400 * round($count2/$total,2);
@@ -134,7 +120,11 @@ width='" . $p2 . "' height='30' align='left'>
 <td>
 " . round($p2/4,2) . "%
 </td>
-</tr>
+</tr>";
+
+if($bool3 == 1)
+{
+echo "
 <tr>
 <td><b>C</b></td>
 <td>
@@ -144,7 +134,12 @@ width='" . $p3 . "' height='30' align='left'>
 <td>
 " . round($p3/4,2) ."%
 </td>
-</tr>
+</tr>";
+}
+
+if($bool4 == 1)
+{
+echo"
 <tr>
 <td><b>D</b></td>
 <td>
@@ -154,13 +149,12 @@ width='" . $p4 . "' height='30' align='left'>
 <td>
 " . round($p4/4,2) . "%
 </td>
-</tr>
+</tr>";
+}
+echo"
 </table>
 <br><br>";
-
-
     
   }
 $conn->close();
-
 ?>

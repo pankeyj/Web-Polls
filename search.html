@@ -14,25 +14,6 @@ eb Polls, Simple Polls, Jake's Web Polls, Simple, cis, gvsu, edu, computer scien
 <script>
 
 $ (document).ready(function(){
-    if(!(localStorage.user === undefined)){
-      document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
-    }else{
-      document.getElementById("userID").innerHTML = "You are not signed in"
-    }
-
-
-
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status ==200) {
-      document.getElementById("results").innerHTML = xhttp.responseText + "<button> REFRESH </button>";
-    }
-  };
-  xhttp.open("GET", "loadPolls.php", true);
-  xhttp.send();
-});
-
-$ (document).ready(function(){
   $("#addPoll").submit(function(event) {
     event.preventDefault();
     var $form = $( this ),
@@ -53,6 +34,27 @@ $ (document).ready(function(){
     });
   event.preventDefault();
   });
+});
+
+
+$ (document).ready(function(){
+  $ ("#searchPolls").submit(function(event) {
+  event.preventDefault();
+  if(!(localStorage.user === undefined)){
+    document.getElementById("userID").innerHTML = "You are signed in as " + localStorage.user;
+  }else{
+    document.getElementById("userID").innerHTML = "You are not signed in"
+  }
+  var str = "loadPolls.php?=
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status ==200) {
+      document.getElementById("results").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "loadPolls.php", true);
+  xhttp.send();
+});
 });
 </script>
 
@@ -109,7 +111,23 @@ $ (document).ready(function(){
       </form>
     </div>
     </div>
-  
+    <div class="six columns">
+      <h3> Search Polls </h3>
+      <form id="search" action="searchPolls.php" method="POST">
+      <p>
+      <label><b>Search By Title</b></label>
+      <input id="searchTitle" type="text"></p>
+      <p>
+      <label><b>Search By User</b></label>
+      <input id="searchUser" type="text"></p>
+      <button class="button-primary" id="submitPoll"> SUBMIT </button>
+      </form>
+      
+
+      <div id="results">
+      </div>
+    </div>
+    </div>
 </body>
 
 </html>

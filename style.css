@@ -46,6 +46,13 @@ h2
 {
   color: #0066cc;
 }
+
+td.resultsTable
+{
+  padding-top: 10px;
+  padding-right: 25px;
+  text-align: left;
+}
 .title
 {
   text-align: center;
